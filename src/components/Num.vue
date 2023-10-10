@@ -1,30 +1,29 @@
 <script setup lang="ts">
 const props = defineProps<{
-  num: number
-  delay: number
-}>()
-const nums = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9]
-const rotate = ref(getRandom(-15, 15))
-const rotate_old = ref()
-const isFirst = ref(true)
+  num: number;
+  delay: number;
+}>();
+const nums = [-1, 0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const rotate = ref(getRandom(-15, 15));
+const rotate_old = ref();
+const isFirst = ref(true);
 function getRandom(min: number, max: number) {
-  return Math.round(Math.random() * (max - min) + min)
+  return Math.round(Math.random() * (max - min) + min);
 }
 watchEffect(() => {
-  const random = getRandom(-15, 15) + (props.num * 0)
-  if (isFirst.value && rotate_old.value)
-    isFirst.value = false
-  rotate_old.value = rotate.value
-  rotate.value = random
-})
+  const random = getRandom(-15, 15) + props.num * 0;
+  if (isFirst.value && rotate_old.value) isFirst.value = false;
+  rotate_old.value = rotate.value;
+  rotate.value = random;
+});
 </script>
 
 <template>
   <div>
     <div v-for="value in nums" :key="value">
-      <div v-show="!isFirst && num === (value + 1)" class="find-out" :style="`animation-delay: 0.${delay}s;`">
+      <div v-show="!isFirst && num === value + 1" class="find-out" :style="`animation-delay: 0.${delay}s;`">
         <div :style="`transform: rotate(${rotate_old}deg)`">
-          {{ value === -1 ? '9' : value }}
+          {{ value === -1 ? "9" : value }}
         </div>
       </div>
       <div v-show="num === value" class="find-in" :style="`animation-delay: 0.${4 + delay}s;`">
