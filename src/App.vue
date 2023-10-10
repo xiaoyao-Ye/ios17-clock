@@ -35,21 +35,26 @@ function updateClock() {
   const newTimeList: number[] = [...hours.split(""), ...minutes.split(""), ...seconds.split("")].map(f => +f);
   getDelay(newTimeList);
   timeList.value = newTimeList;
-  // console.log('( timeList.value )===============>', timeList.value)
 
-  // 计算下一分钟的时间
   const nextMinute = new Date(now.getFullYear(), now.getMonth(), now.getDate(), now.getHours(), now.getMinutes() + 1, 0);
   const timeDifference = nextMinute.getTime() - now.getTime();
   // const timeDifference = 5000
 
-  // 设置下一次的定时
   timeID.value = setTimeout(updateClock, timeDifference);
 }
 function getRandom(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min);
 }
-const rotate = ref(getRandom(-15, 15));
+const rotate = ref(getRandom(-12, 12));
 updateClock();
+
+window.addEventListener("resize", calculateFontSize);
+function calculateFontSize() {
+  const windowWidth = window.innerWidth;
+  const fontSize = windowWidth / 10 + "px"; // 将窗口宽度的十分之一作为字体大小的基准
+  document.documentElement.style.fontSize = fontSize;
+}
+calculateFontSize();
 
 onUnmounted(() => {
   clearInterval(timeID.value);
@@ -57,10 +62,10 @@ onUnmounted(() => {
 </script>
 
 <template>
-  <div h-full w-full flex items-center justify-center overflow-hidden text-13rem>
+  <div h-full w-full flex items-center justify-center overflow-hidden text-3.5rem>
     <Num :num="timeList[0]" :delay="delayList[0]" />
     <Num :num="timeList[1]" :delay="delayList[1]" />
-    <div :style="`transform: rotate(${rotate}deg);padding-bottom: 100px;`">:</div>
+    <div :style="`transform: rotate(${rotate}deg); transition: all 3s ease;`">:</div>
     <Num :num="timeList[2]" :delay="delayList[2]" />
     <Num :num="timeList[3]" :delay="delayList[3]" />
     <!-- <Num :num="timeList[4]" :delay="delayList[4]" /> -->
@@ -74,13 +79,14 @@ onUnmounted(() => {
 @import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Pacifico&display=swap");
 
 html {
-  font-size: 50px;
   font-weight: 900;
   line-height: 1;
   font-family: "Pacifico", cursive !important;
-}
-.font-sans {
-  font-family: "Pacifico", cursive !important;
   font-family: "Lilita One", cursive !important;
+}
+#app {
+  overflow: hidden;
+  width: 100vw;
+  height: 100vh;
 }
 </style>
