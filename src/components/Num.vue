@@ -10,12 +10,15 @@ const isFirst = ref(true);
 function getRandom(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min);
 }
-watchEffect(() => {
-  const random = getRandom(-15, 15) + props.num * 0;
-  if (isFirst.value && rotate_old.value) isFirst.value = false;
-  rotate_old.value = rotate.value;
-  rotate.value = random;
-});
+watch(
+  () => props.num,
+  () => {
+    const random = getRandom(-15, 15);
+    if (isFirst.value && rotate_old.value) isFirst.value = false;
+    rotate_old.value = rotate.value;
+    rotate.value = random;
+  },
+);
 </script>
 
 <template>
