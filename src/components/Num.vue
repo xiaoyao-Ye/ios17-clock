@@ -19,6 +19,7 @@ watch(
     num_old.value = num_current.value;
     num_current.value = newValue;
     rotate_old.value = rotate.value;
+    rotate.value = getRandom(-15, 15);
     key.value = new Date().getTime();
     // const random = getRandom(-15, 15);
     // if (isFirst.value && !oldNum.value) isFirst.value = false;
@@ -45,10 +46,10 @@ watch(
     <!-- </div> -->
     <!-- </div> -->
     <!-- </div> -->
-    <div v-show="num_old === undefined" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
+    <div v-show="num_old" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
       <div :style="`transform: rotate(${rotate_old}deg)`">{{ num_old }}</div>
     </div>
-    <div v-show="num_current === undefined" :key="key" class="find-in" :style="`animation-delay: 0.${4 + delay}s;`">
+    <div :key="key" class="find-in" :style="`animation-delay: 0.${4 + delay}s;`">
       <div :style="`transform: rotate(${rotate}deg)`">{{ num_current }}</div>
     </div>
   </div>
