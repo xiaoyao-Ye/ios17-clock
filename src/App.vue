@@ -45,7 +45,6 @@ function updateClock() {
 function getRandom(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min);
 }
-const rotate = ref(getRandom(-12, 12));
 updateClock();
 
 window.addEventListener("resize", calculateFontSize);
@@ -59,15 +58,19 @@ calculateFontSize();
 onUnmounted(() => {
   clearInterval(timeID.value);
 });
+
+const rotate = ref(getRandom(-12, 12));
+const pointStyle = `transform: rotate(${rotate}deg); transition: all 3s ease;color:#fff;text-shadow:0px 0px 7px rgba(255, 255, 255, 0.8);z-index: 1;`;
+const colors = ["color: rgba(81,241,177,0.6)", "color: rgba(135,255,161,0.8)"];
 </script>
 
 <template>
   <div h-full w-full flex items-center justify-center overflow-hidden text-3.5rem>
-    <Num :num="timeList[0]" :delay="delayList[0]" />
-    <Num :num="timeList[1]" :delay="delayList[1]" />
-    <div :style="`transform: rotate(${rotate}deg); transition: all 3s ease;`">:</div>
-    <Num :num="timeList[2]" :delay="delayList[2]" />
-    <Num :num="timeList[3]" :delay="delayList[3]" />
+    <Num :num="timeList[0]" :delay="delayList[0]" :style="colors[0]" />
+    <Num :num="timeList[1]" :delay="delayList[1]" :style="colors[1]" />
+    <div :style="pointStyle">:</div>
+    <Num :num="timeList[2]" :delay="delayList[2]" :style="colors[0]" />
+    <Num :num="timeList[3]" :delay="delayList[3]" :style="colors[1]" />
     <!-- <Num :num="timeList[4]" :delay="delayList[4]" /> -->
     <!-- <Num :num="timeList[5]" :delay="delayList[5]" /> -->
     <!-- <Clock :time-list="timeList" /> -->
@@ -84,9 +87,11 @@ html {
   font-family: "Pacifico", cursive !important;
   font-family: "Lilita One", cursive !important;
 }
+
 #app {
   overflow: hidden;
   width: 100vw;
   height: 100vh;
+  background-color: #000;
 }
 </style>
