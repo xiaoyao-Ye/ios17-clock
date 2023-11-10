@@ -46,7 +46,7 @@ watch(
     <!-- </div> -->
     <!-- </div> -->
     <!-- </div> -->
-    <div v-show="num_old" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
+    <div v-show="num_old !== undefined" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
       <div :style="`transform: rotate(${rotate_old}deg)`">{{ num_old }}</div>
     </div>
     <div :key="key" class="find-in" :style="`animation-delay: 0.${4 + delay}s;`">
