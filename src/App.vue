@@ -81,6 +81,10 @@ const colors = ["color: rgba(81,241,177,0.6)", "color: rgba(135,255,161,0.8)"];
 @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Pacifico&display=swap");
 
+* {
+  user-select: none;
+}
+
 html {
   font-weight: 900;
   line-height: 1;
