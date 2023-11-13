@@ -8,7 +8,7 @@ const rotate = ref(getRandom(-15, 15));
 const rotate_old = ref();
 const key = ref(new Date().getTime());
 const num_current = ref(props.num);
-const num_old = ref();
+const num_old = ref<null | number>(null);
 function getRandom(min: number, max: number) {
   return Math.round(Math.random() * (max - min) + min);
 }
@@ -46,7 +46,7 @@ watch(
     <!-- </div> -->
     <!-- </div> -->
     <!-- </div> -->
-    <div v-show="num_old !== undefined" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
+    <div v-show="num_old !== null" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
       <div :style="`transform: rotate(${rotate_old}deg)`">{{ num_old }}</div>
     </div>
     <div :key="key" class="find-in" :style="`animation-delay: 0.${4 + delay}s;`">
