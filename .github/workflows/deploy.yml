@@ -43,7 +43,7 @@ jobs:
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           run: |
-            ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'docker run -P 8080:80 -d ios17-clock'
+            ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'docker run -dp 8080:80 yqcyecong/ios17-clock'
 
       # - name: Run Docker container on server
       #   run: |
