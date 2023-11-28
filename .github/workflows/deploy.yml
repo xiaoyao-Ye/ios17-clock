@@ -42,9 +42,7 @@ jobs:
           host: ${{ secrets.SERVER_HOST }}
           username: ${{ secrets.SERVER_USERNAME }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
-          run: |
-            ssh -o StrictHostKeyChecking=no ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'docker run -dp 8080:80 yqcyecong/ios17-clock'
-
-      # - name: Run Docker container on server
-      #   run: |
-      #     ssh -o StrictHostKeyChecking=no -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'docker run -P 8080:80 -d ios17-clock'
+          script: |
+            if [ $(docker ps -aq --filter name=ios17-clock) ]; then docker rm -f ios17-clock;fi
+            docker pull yqcyecong/ios17-clock
+            docker run --name ios17-clock -dp 8080:80 yqcyecong/ios17-clock
