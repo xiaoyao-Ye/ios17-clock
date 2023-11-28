@@ -7,7 +7,7 @@ on:
       - dev
 
 jobs:
-  build-and-deploy:
+  build:
     runs-on: ubuntu-latest
 
     steps:
@@ -31,6 +31,10 @@ jobs:
       - name: Push Docker image
         run: docker push yqcyecong/ios17-clock
 
+  deploy:
+    runs-on: ubuntu-latest
+
+    steps:
       - name: SSH into server
         uses: appleboy/ssh-action@master
         with:
@@ -40,4 +44,4 @@ jobs:
 
       - name: Run Docker container on server
         run: |
-          ssh -o "StrictHostKeyChecking no" ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'docker run -P 8080:80 -d ios17-clock'
+          ssh -o StrictHostKeyChecking=no -i ${{ secrets.SSH_PRIVATE_KEY }} ${{ secrets.SERVER_USERNAME }}@${{ secrets.SERVER_HOST }} 'docker run -P 8080:80 -d ios17-clock'
