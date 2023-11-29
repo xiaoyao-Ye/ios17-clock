@@ -4,7 +4,6 @@ on:
   push:
     branches:
       - main
-      - dev
 
 jobs:
   build:
@@ -25,7 +24,6 @@ jobs:
         id: version
         run: |
           echo "::set-output name=version::$(cat package.json | grep '\"version\"' | cut -d ':' -f 2 | tr -d ',"[[:space:]]')"
-
 
       - name: Build Docker image
         run: docker build -t yqcyecong/ios17-clock:${{ steps.version.outputs.version }} .

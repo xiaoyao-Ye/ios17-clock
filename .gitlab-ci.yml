@@ -1,0 +1,18 @@
+cache:
+  key: ci-cache
+  paths:
+    - "node_modules/"
+
+stages:
+  - "deploy"
+
+deploy:
+  stage: deploy
+  image: docker
+  script:
+    - docker build . --tag clock
+    # 判断name=clock这个容器是否在运行，在运行的话就进行销毁
+    - if [ $(docker ps -aq --filter name=clock) ]; then docker rm -f clock;fi
+    - docker run -d -p 8080:80 --name clock clock
+  only:
+    - main
