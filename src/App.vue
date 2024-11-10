@@ -78,8 +78,10 @@ const colors = ["color: rgba(81,241,177,0.6)", "color: rgba(135,255,161,0.8)"];
 </template>
 
 <style>
-@import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap");
-@import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Pacifico&display=swap");
+/* @import url("https://fonts.googleapis.com/css2?family=Pacifico&display=swap"); */
+/* @import url("https://fonts.googleapis.com/css2?family=Lilita+One&family=Pacifico&display=swap"); */
+/* @import url("./assets/fonts/Pacifico/index.css"); */
+@import url("./assets/fonts/LilitaOne/index.css");
 
 * {
   user-select: none;
@@ -88,7 +90,7 @@ const colors = ["color: rgba(81,241,177,0.6)", "color: rgba(135,255,161,0.8)"];
 html {
   font-weight: 900;
   line-height: 1;
-  font-family: "Pacifico", cursive !important;
+  /* font-family: "Pacifico", cursive !important; */
   font-family: "Lilita One", cursive !important;
 }
 
