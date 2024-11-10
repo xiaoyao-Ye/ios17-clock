@@ -10,7 +10,7 @@ function padStart(num: number, len: number = 2, str: string = "0") {
   return num.toString().padStart(len, str);
 }
 
-const timeList = ref<number[]>([-1, -1, -1, -1, -1, -1]);
+const timeList = ref<number[]>([-1, -1, -1, -1]);
 const delayList = ref<number[]>([]);
 const timeID = ref<NodeJS.Timeout | string | number | undefined>();
 
@@ -71,9 +71,6 @@ const colors = ["color: rgba(81,241,177,0.6)", "color: rgba(135,255,161,0.8)"];
     <div :style="pointStyle">:</div>
     <Num :num="timeList[2]" :delay="delayList[2]" :style="colors[0]" />
     <Num :num="timeList[3]" :delay="delayList[3]" :style="colors[1]" />
-    <!-- <Num :num="timeList[4]" :delay="delayList[4]" /> -->
-    <!-- <Num :num="timeList[5]" :delay="delayList[5]" /> -->
-    <!-- <Clock :time-list="timeList" /> -->
   </div>
 </template>
 
