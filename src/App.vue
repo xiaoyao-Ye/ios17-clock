@@ -1,4 +1,6 @@
 <script setup lang="ts">
+import { padStart, getRandom } from "~/utils";
+
 const GitHub = "_Ghosteye";
 console.log(
   `\n %c Welcome to ${GitHub} %c https://github.com/xiaoyao-Ye \n\n`,
@@ -6,13 +8,9 @@ console.log(
   "",
 );
 
-function padStart(num: number, len: number = 2, str: string = "0") {
-  return num.toString().padStart(len, str);
-}
-
 const timeList = ref<number[]>([-1, -1, -1, -1]);
 const delayList = ref<number[]>([]);
-const timeID = ref<NodeJS.Timeout | string | number | undefined>();
+const timeID = ref<NodeJS.Timeout>();
 
 function getDelay(newTimeList: number[]) {
   let i = 0;
@@ -31,8 +29,8 @@ function updateClock() {
   const now = new Date();
   const hours = padStart(now.getHours());
   const minutes = padStart(now.getMinutes());
-  const seconds = padStart(now.getSeconds());
-  const newTimeList: number[] = [...hours.split(""), ...minutes.split(""), ...seconds.split("")].map(f => +f);
+  // const seconds = padStart(now.getSeconds());
+  const newTimeList: number[] = [...hours.split(""), ...minutes.split("")].map(f => +f);
   getDelay(newTimeList);
   timeList.value = newTimeList;
 
@@ -42,21 +40,24 @@ function updateClock() {
 
   timeID.value = setTimeout(updateClock, timeDifference);
 }
-function getRandom(min: number, max: number) {
-  return Math.round(Math.random() * (max - min) + min);
-}
 updateClock();
 
-window.addEventListener("resize", calculateFontSize);
 function calculateFontSize() {
   const windowWidth = window.innerWidth;
-  const fontSize = windowWidth / 10 + "px"; // 将窗口宽度的十分之一作为字体大小的基准
+  // 将窗口宽度的十分之一作为字体大小的基准
+  const FONT_SIZE_RATIO = 10;
+  const fontSize = `${windowWidth / FONT_SIZE_RATIO}px`;
   document.documentElement.style.fontSize = fontSize;
 }
 calculateFontSize();
 
+onMounted(() => {
+  window.addEventListener("resize", calculateFontSize);
+});
+
 onUnmounted(() => {
-  clearInterval(timeID.value);
+  clearTimeout(timeID.value);
+  window.removeEventListener("resize", calculateFontSize);
 });
 
 const rotate = ref(getRandom(-12, 12));

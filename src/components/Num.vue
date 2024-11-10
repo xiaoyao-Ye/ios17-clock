@@ -1,36 +1,36 @@
 <script setup lang="ts">
+import { getRandom } from "~/utils";
+
 const props = defineProps<{
   num: number;
   delay: number;
 }>();
 const rotate = ref(getRandom(-15, 15));
-const rotate_old = ref();
+const rotateOld = ref();
 const key = ref(new Date().getTime());
-const num_current = ref(props.num);
-const num_old = ref<null | number>(null);
-function getRandom(min: number, max: number) {
-  return Math.round(Math.random() * (max - min) + min);
-}
+const numCurrent = ref(props.num);
+const numOld = ref<null | number>(null);
+
 watch(
   () => props.num,
-  newValue => {
+  (newValue, oldValue) => {
     // console.log("num", props.num);
-    num_old.value = num_current.value;
-    num_current.value = newValue;
-    rotate_old.value = rotate.value;
+    numOld.value = oldValue;
+    numCurrent.value = newValue;
+    rotateOld.value = rotate.value;
     rotate.value = getRandom(-15, 15);
-    key.value = new Date().getTime();
+    key.value = Date.now();
   },
 );
 </script>
 
 <template>
   <div>
-    <div v-show="num_old !== null" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
-      <div :style="`transform: rotate(${rotate_old}deg)`">{{ num_old }}</div>
+    <div v-show="numOld !== null" :key="key" class="find-out" :style="`animation-delay: 0.${delay}s;`">
+      <div :style="`transform: rotate(${rotateOld}deg)`">{{ numOld }}</div>
     </div>
     <div :key="key" class="find-in" :style="`animation-delay: 0.${4 + delay}s;`">
-      <div :style="`transform: rotate(${rotate}deg)`">{{ num_current }}</div>
+      <div :style="`transform: rotate(${rotate}deg)`">{{ numCurrent }}</div>
     </div>
   </div>
 </template>
