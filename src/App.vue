@@ -9,15 +9,15 @@ console.log(
 );
 
 const timeList = ref<number[]>([-1, -1, -1, -1]);
-const delayList = ref<number[]>([]);
+const delayList = ref<number[]>([0, 1, 2, 3]);
 const timeID = ref<NodeJS.Timeout>();
 
 function getDelay(newTimeList: number[]) {
   let i = 0;
-  const list: number[] = [];
-  timeList.value.forEach((f, index) => {
+  const list: number[] = [0, 0, 0, 0];
+  timeList.value.forEach((oldNum, index) => {
     list[index] = 0;
-    if (f !== newTimeList[index]) {
+    if (oldNum !== newTimeList[index]) {
       list[index] = i;
       i++;
     }
@@ -51,13 +51,24 @@ function calculateFontSize() {
 }
 calculateFontSize();
 
+// 添加页面可见性处理
+function handleVisibilityChange() {
+  if (document.visibilityState === "visible") {
+    // 页面变为可见时，立即更新时钟
+    clearTimeout(timeID.value);
+    updateClock();
+  }
+}
+
 onMounted(() => {
   window.addEventListener("resize", calculateFontSize);
+  window.addEventListener("visibilitychange", handleVisibilityChange);
 });
 
 onUnmounted(() => {
   clearTimeout(timeID.value);
   window.removeEventListener("resize", calculateFontSize);
+  window.removeEventListener("visibilitychange", handleVisibilityChange);
 });
 
 const rotate = ref(getRandom(-12, 12));
